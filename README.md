@@ -1,24 +1,41 @@
-# PGBIN-BUILD 
+# PGBIN-BUILD
 
+## Creating a Build Environment on el8 or el9
 
-## Creating a build environment on el8 or el9
+1. First, set up a CLI environment to be able to test. You can refer to the [pgEdge CLI repository](https://github.com/pgEdge/cli).
 
-### 1.) First setup a CLI environment to be able to test (see https://github.com/pgEdge/cli)
+2. Change the ownership of the `/opt` directory to be `$USER:$USER` so you can write there.
 
-### 2.) Change the owernship of `/opt` directory to be $USER:$USER so you can write there
+```bash
+sudo chown -R $USER:$USER /opt
+```
 
-### 3.) From /opt directory, run `git clone https://github.com/pgedge/pgbin-build`
+From the /opt directory, clone the pgbin-build repository:
 
-### 4.) The BLD & IN environment variables are setup in your .bashrc from step #1 installing the CLI
+```bash
+git clone https://github.com/pgedge/pgbin-build
+```
 
-### 5.) Configure your ~/.aws/config credentials for access to s3://pgedge-xxxxxxxx/IN
+The BLD and IN environment variables are set up in your .bashrc from step #1 installing the CLI.
 
-### 6.) in setup directory run `1-pgbin-build.sh` script to setup all compilation tools needed
+Configure your ~/.aws/config credentials for access to s3://pgedge-xxxxxxxx/IN.
 
-### 7.) in setup directory run `2-pull-IN.sh` to pull in all the source binaries into the IN directory structure
+In the setup directory, run the 1-pgbin-build.sh script to set up all compilation tools needed.
 
-### 8.) cd $BLD 
-        a) run `./sharedlibs.sh` the first time and each time you do incremental pg releases (after `dnf update`)
-        b) run `./build-all-pgbin.sh 16`   & `build-all-components.sh spock32 16' to confirm environment
-        c) execute build-scripts as necessary and maintain IN directory binaries via push & pull scripts
+In the setup directory, run the 2-pull-IN.sh script to pull in all the source binaries into the IN directory structure.
 
+Navigate to the $BLD directory:
+
+```bash
+cd $BLD
+```
+a) Run ./sharedlibs.sh the first time and each time you do incremental PostgreSQL releases (after dnf update).
+
+b) Run the following commands to confirm the environment:
+
+```bash
+./build-all-pgbin.sh 16
+./build-all-components.sh spock32 16
+```
+
+c) Execute build-scripts as necessary and maintain IN directory binaries via push & pull scripts
